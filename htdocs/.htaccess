@@ -1,0 +1,13 @@
+RewriteEngine On
+
+# Check if the host starts with www
+RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+
+# Redirect to non-www with https, capturing group 1 from RewriteCond to get the domain name
+RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
+
+# Check if HTTPS is not on
+RewriteCond %{HTTPS} off
+
+# Redirect to the same URL with https
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]

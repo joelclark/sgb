@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# scp the files to /www/sleepgoodbud on sleepgoodbud.com
+scp -r ./* rando-apache:/www/sleepgoodbud 
+ssh rando-apache "sudo chown -R www-data:www-data /www/sleepgoodbud"
+ssh rando-apache "sudo chmod -R g+w /www/sleepgoodbud"
+
+# ensure sleepgoodbud.com.conf is created
+scp ./sleepgoodbud.com.conf rando-apache:/www/sleepgoodbud/sleepgoodbud.com.conf
+ssh rando-apache "sudo cp /www/sleepgoodbud/sleepgoodbud.com.conf /etc/apache2/sites-available/sleepgoodbud.com.conf"
+
+# ensure everything is g2g
+scp ./htdocs/.htaccess rando-apache:/www/sleepgoodbud/htdocs/.htaccess
+sudo a2enmod rewrite
+ssh rando-apache "sudo a2ensite sleepgoodbud.com.conf"
+ssh rando-apache "sudo systemctl restart apache2"
