@@ -11,6 +11,6 @@ ssh rando-apache "sudo cp /www/sleepgoodbud/sleepgoodbud.com.conf /etc/apache2/s
 
 # ensure everything is g2g
 scp ./htdocs/.htaccess rando-apache:/www/sleepgoodbud/htdocs/.htaccess
-sudo a2enmod rewrite
+ssh rando-apache "sudo a2enmod rewrite"
 ssh rando-apache "sudo a2ensite sleepgoodbud.com.conf"
 ssh rando-apache "sudo systemctl restart apache2"
